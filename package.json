@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx webpack --config webpack.config.js",
-    "start": "npx webpack serve --port=8000"
+    "start": "npx webpack serve --config webpack.config.js --port=8000 --live-reload"
   },
   "keywords": [],
   "author": "",
