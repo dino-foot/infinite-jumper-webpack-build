@@ -1,0 +1,26 @@
+{
+  "name": "infinite-jumper-webpack-build",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx webpack --config webpack.config.js",
+    "start": "npx webpack serve --port=8000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^6.4.0",
+    "file-loader": "^6.2.0",
+    "raw-loader": "^4.0.2",
+    "style-loader": "^3.3.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.58.2",
+    "webpack-cli": "^4.9.0",
+    "webpack-dev-server": "^4.3.1"
+  },
+  "dependencies": {
+    "phaser": "^3.55.2"
+  }
+}
