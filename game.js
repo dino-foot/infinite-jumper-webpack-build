@@ -25,7 +25,7 @@ export default class Game extends Phaser.Scene {
   }
 
   init() {
-    console.log("init");
+    console.log("init-game-2");
     // 4 arrow keys
     this.cursors = this.input.keyboard.createCursorKeys();
   }

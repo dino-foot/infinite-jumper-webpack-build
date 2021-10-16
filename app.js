@@ -9,6 +9,11 @@ const config = {
   audio: {
     disableWebAudio: true,
   },
+  scale: {
+    parent: "game",
+    mode: Phaser.Scale.FIT,
+    center: Phaser.Scale.CENTER_BOTH,
+  },
   physics: {
     default: "arcade",
     arcade: {
@@ -20,15 +25,4 @@ const config = {
   scene: [Game, GameOver_Scene],
 };
 
-const mygame = new Phaser.Game(config);
-
-// function preload(){
-//    console.log(banana.color);
-
-//   //this.load.image('card', imageUrl);
-//   //this.load.image('sky', 'http://labs.phaser.io/assets/skies/space3.png');
-// }
-
-// function create(){
-//   this.add.image(300,300, 'card');
-// }
+const game = new Phaser.Game(config);
