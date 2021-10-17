@@ -42,8 +42,9 @@ export default class Game extends Phaser.Scene {
     console.log("create");
 
     //movement for mobile
-    this.onClickMovement();
-
+    if (!this.sys.game.device.os.desktop) {
+      this.onClickMovement();
+    }
     //! can only be initiated by user gesture
     //this.scale.startFullscreen();
 
