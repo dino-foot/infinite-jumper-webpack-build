@@ -1,8 +1,8 @@
 import platformUrl from "./public/sprites/ground_grass.png";
 import playerStandUrl from "./public/sprites/player/bunny1_stand.png";
 import playerJumpUrl from "./public/sprites/player/bunny1_jump.png";
-import leftArrow from "./public/sprites/green_sliderLeft.png";
-import rightArrow from "./public/sprites/green_sliderRight.png";
+import leftArrowUrl from "./public/sprites/red_sliderLeft.png";
+import rightArrowUrl from "./public/sprites/red_sliderRight.png";
 import carrotUrl from "./public/sprites/carrot.png";
 import Carrot from "./Carrot";
 
@@ -16,6 +16,8 @@ export default class Game extends Phaser.Scene {
     this.carrots;
     this.carrotsCollected = 0;
     this.carrotsCollectedText = null;
+    this.pressedLeft = false;
+    this.pressedRight = false;
   }
 
   init() {
@@ -28,6 +30,8 @@ export default class Game extends Phaser.Scene {
   preload() {
     console.log("preload");
 
+    this.load.image("leftArrow", leftArrowUrl);
+    this.load.image("rightArrow", rightArrowUrl);
     this.load.image("platform", platformUrl);
     this.load.image("bunny-stand", playerStandUrl);
     this.load.image("bunny-jump", playerJumpUrl);
@@ -36,6 +40,9 @@ export default class Game extends Phaser.Scene {
 
   create() {
     console.log("create");
+
+    //movement for mobile
+    this.onClickMovement();
 
     //! can only be initiated by user gesture
     //this.scale.startFullscreen();
@@ -86,6 +93,56 @@ export default class Game extends Phaser.Scene {
       .setOrigin(0.5, 0);
   } // end
 
+  onClickMovement() {
+    let leftArrow = this.add
+      .image(50, this.cameras.main.height - 50, "leftArrow")
+      .setOrigin(0.5)
+      .setDepth(10)
+      .setScale(1.25)
+      .setInteractive()
+      .setScrollFactor(0);
+
+    let rightArrow = this.add
+      .image(
+        this.cameras.main.width - 50,
+        this.cameras.main.height - 50,
+        "rightArrow"
+      )
+      .setOrigin(0.5)
+      .setDepth(10)
+      .setScale(1.25)
+      .setInteractive()
+      .setScrollFactor(0);
+
+    leftArrow.on(
+      "pointerdown",
+      () => {
+        this.pressedLeft = true;
+        //console.log("left arrow");
+      },
+      this
+    );
+
+    rightArrow.on(
+      "pointerdown",
+      () => {
+        this.pressedRight = true;
+        //console.log("right arrow");
+      },
+      this
+    );
+
+    this.input.on(
+      "pointerup",
+      () => {
+        //console.log("released");
+        this.pressedLeft = false;
+        this.pressedRight = false;
+      },
+      this
+    );
+  }
+
   //time and deltaTime
   update(t, dt) {
     let _touchingDown = this.player.body.touching.down;
@@ -97,9 +154,12 @@ export default class Game extends Phaser.Scene {
     }
 
     //movement
-    if (this.cursors.left.isDown && !_touchingDown) {
+    if (this.cursors.left.isDown || (this.pressedLeft && !_touchingDown)) {
       this.player.setVelocityX(-200);
-    } else if (this.cursors.right.isDown && !_touchingDown) {
+    } else if (
+      this.cursors.right.isDown ||
+      (this.pressedRight && !_touchingDown)
+    ) {
       this.player.setVelocityX(200);
     } else {
       this.player.setVelocityX(0);
