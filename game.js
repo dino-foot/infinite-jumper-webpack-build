@@ -1,6 +1,8 @@
 import platformUrl from "./public/sprites/ground_grass.png";
 import playerStandUrl from "./public/sprites/player/bunny1_stand.png";
 import playerJumpUrl from "./public/sprites/player/bunny1_jump.png";
+import leftArrow from "./public/sprites/green_sliderLeft.png";
+import rightArrow from "./public/sprites/green_sliderRight.png";
 import carrotUrl from "./public/sprites/carrot.png";
 import Carrot from "./Carrot";
 
@@ -9,23 +11,16 @@ export default class Game extends Phaser.Scene {
     super("game"); // scene key, every scene should have a unique key
 
     this.player = null;
-
-    /**
-     * @type {Phaser.Physics.Arcade.StaticGroup}
-     */
     this.platforms = null;
-    /**
-     * @type {Phaser.Types.Input.Keyboard.CursorKeys}
-     * */
     this.cursors;
-
     this.carrots;
     this.carrotsCollected = 0;
     this.carrotsCollectedText = null;
   }
 
   init() {
-    console.log("init-game-2");
+    console.log("init-game");
+
     // 4 arrow keys
     this.cursors = this.input.keyboard.createCursorKeys();
   }
@@ -42,9 +37,8 @@ export default class Game extends Phaser.Scene {
   create() {
     console.log("create");
 
-    //add image
-    this.add.image(240, 320, "background").setScrollFactor(1, 0);
-    //this.physics.add.image(240, 320, 'platform').setScale(0.5);
+    //! can only be initiated by user gesture
+    //this.scale.startFullscreen();
 
     this.platforms = this.physics.add.staticGroup();
 
@@ -117,7 +111,7 @@ export default class Game extends Phaser.Scene {
       const platform = child;
       const scrollY = this.cameras.main.scrollY;
       if (platform.y >= scrollY + 700) {
-        platform.y = scrollY - Phaser.Math.Between(50, 100);
+        platform.y = scrollY - Phaser.Math.Between(100, 100);
         platform.body.updateFromGameObject();
         //console.log(platform.y);
         //create a carrod above the platform

@@ -3,8 +3,6 @@ import Game from "./Game";
 import GameOver from "./GameOver";
 
 const config = {
-  width: 480,
-  height: 640,
   type: Phaser.AUTO,
   backgroundColor: "87ceeb",
   audio: {
@@ -14,13 +12,15 @@ const config = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
     parent: "game",
+    width: 480,
+    height: 640,
   },
   physics: {
     default: "arcade",
     arcade: {
       fps: 60,
       gravity: { y: 500 },
-      debug: false,
+      debug: true,
     },
   },
   scene: [Game, GameOver],
