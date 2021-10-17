@@ -1,18 +1,19 @@
 import Phaser from "phaser";
-import Game from "./game";
-import { GameOver_Scene } from "./GameOver";
+import Game from "./Game";
+import GameOver from "./GameOver";
 
 const config = {
   width: 480,
   height: 640,
   type: Phaser.AUTO,
+  backgroundColor: "87ceeb",
   audio: {
     disableWebAudio: true,
   },
   scale: {
-    parent: "game",
     mode: Phaser.Scale.FIT,
-    center: Phaser.Scale.CENTER_BOTH,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    parent: "game",
   },
   physics: {
     default: "arcade",
@@ -22,7 +23,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [Game, GameOver_Scene],
+  scene: [Game, GameOver],
 };
 
 const game = new Phaser.Game(config);

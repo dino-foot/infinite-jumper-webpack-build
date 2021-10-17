@@ -1,8 +1,8 @@
-import bgUrl from "./public/sprites/bg_layer1.png";
 import platformUrl from "./public/sprites/ground_grass.png";
-import playerUrl from "./public/sprites/player/bunny1_stand.png";
+import playerStandUrl from "./public/sprites/player/bunny1_stand.png";
+import playerJumpUrl from "./public/sprites/player/bunny1_jump.png";
 import carrotUrl from "./public/sprites/carrot.png";
-import { Carrot } from "./Carrot";
+import Carrot from "./Carrot";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -33,9 +33,9 @@ export default class Game extends Phaser.Scene {
   preload() {
     console.log("preload");
 
-    this.load.image("background", bgUrl);
     this.load.image("platform", platformUrl);
-    this.load.image("bunny-stand", playerUrl);
+    this.load.image("bunny-stand", playerStandUrl);
+    this.load.image("bunny-jump", playerJumpUrl);
     this.load.image("carrot", carrotUrl);
   }
 
@@ -59,9 +59,7 @@ export default class Game extends Phaser.Scene {
       _body.updateFromGameObject(); // refresh
     }
 
-    this.player = this.physics.add
-      .sprite(240, 320, "bunny-stand")
-      .setScale(0.5);
+    this.player = this.physics.add.image(240, 320, "bunny-stand").setScale(0.5);
     this.player.body.checkCollision.up = false;
     this.player.body.checkCollision.left = false;
     this.player.body.checkCollision.right = false;
@@ -69,9 +67,6 @@ export default class Game extends Phaser.Scene {
     this.carrots = this.physics.add.group({
       classType: Carrot,
     });
-
-    //console.log(this.carrots.getLength());
-    //this.carrots.get(240, 320, 'carrot');
 
     // collision between object1 and object2
     this.physics.add.collider(this.platforms, this.player);
@@ -101,7 +96,10 @@ export default class Game extends Phaser.Scene {
   update(t, dt) {
     let _touchingDown = this.player.body.touching.down;
     if (_touchingDown) {
+      //this.player.setTexture("bunny-stand");
       this.player.setVelocityY(-500);
+    } else {
+      //this.player.setTexture("bunny-jump");
     }
 
     //movement

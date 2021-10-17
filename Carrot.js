@@ -1,4 +1,4 @@
-class Carrot extends Phaser.Physics.Arcade.Sprite {
+export default class Carrot extends Phaser.Physics.Arcade.Sprite {
   /**
    * @param {Phaser.scene} scene
    * @param {number} x
@@ -10,5 +10,3 @@ class Carrot extends Phaser.Physics.Arcade.Sprite {
     this.setScale(0.5);
   }
 }
-
-export { Carrot };
