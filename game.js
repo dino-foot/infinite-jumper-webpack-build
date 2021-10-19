@@ -99,7 +99,7 @@ export default class Game extends Phaser.Scene {
       .image(50, this.cameras.main.height - 50, "leftArrow")
       .setOrigin(0.5)
       .setDepth(10)
-      .setScale(1.25)
+      .setScale(2)
       .setInteractive()
       .setScrollFactor(0);
 
@@ -111,7 +111,7 @@ export default class Game extends Phaser.Scene {
       )
       .setOrigin(0.5)
       .setDepth(10)
-      .setScale(1.25)
+      .setScale(2)
       .setInteractive()
       .setScrollFactor(0);
 

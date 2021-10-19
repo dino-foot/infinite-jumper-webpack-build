@@ -20,7 +20,6 @@ const config = {
     arcade: {
       fps: 60,
       gravity: { y: 500 },
-      debug: true,
     },
   },
   scene: [Game, GameOver],
