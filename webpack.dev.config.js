@@ -19,10 +19,10 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset/resource",
       },
-      // {
-      //   test: /\.(png|jpg|gif)$/i,
-      //   use: ["url-loader"],
-      // },
+      {
+        test: /\.(mp3|ogg|wav)$/i,
+        loader: "file-loader",
+      },
       {
         test: [/\.vert$/, /\.frag$/],
         use: "raw-loader",

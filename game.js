@@ -4,6 +4,10 @@ import playerJumpUrl from "./public/sprites/player/bunny1_jump.png";
 import leftArrowUrl from "./public/sprites/red_sliderLeft.png";
 import rightArrowUrl from "./public/sprites/red_sliderRight.png";
 import carrotUrl from "./public/sprites/carrot.png";
+import jumpAudio from "./public/audio/jump.mp3";
+import gulpAudio from "./public/audio/gulp.mp3";
+import deadAudio from "./public/audio/dead.mp3";
+
 import Carrot from "./Carrot";
 
 export default class Game extends Phaser.Scene {
@@ -36,6 +40,10 @@ export default class Game extends Phaser.Scene {
     this.load.image("bunny-stand", playerStandUrl);
     this.load.image("bunny-jump", playerJumpUrl);
     this.load.image("carrot", carrotUrl);
+
+    this.load.audio("jump", jumpAudio);
+    this.load.audio("dead", deadAudio);
+    this.load.audio("gulp", gulpAudio);
   }
 
   create() {
@@ -45,7 +53,7 @@ export default class Game extends Phaser.Scene {
     if (!this.sys.game.device.os.desktop) {
       this.onClickMovement();
     }
-    //! can only be initiated by user gesture
+
     //this.scale.startFullscreen();
 
     this.platforms = this.physics.add.staticGroup();
@@ -149,6 +157,7 @@ export default class Game extends Phaser.Scene {
     let _touchingDown = this.player.body.touching.down;
     if (_touchingDown) {
       //this.player.setTexture("bunny-stand");
+      this.sound.play("jump");
       this.player.setVelocityY(-500);
     } else {
       //this.player.setTexture("bunny-jump");
@@ -184,6 +193,7 @@ export default class Game extends Phaser.Scene {
 
     const bottomPlatform = this.findBottomMostPlatform();
     if (this.player.y > bottomPlatform.y + 200) {
+      this.sound.play("dead");
       console.log("game over");
       this.scene.start("gameover");
     }
@@ -222,6 +232,7 @@ export default class Game extends Phaser.Scene {
   }
 
   onOverlapCarrot(_player, _carrot) {
+    this.sound.play("gulp");
     console.log("overlap carrot");
     //hide and kill
     this.carrots.killAndHide(_carrot);
