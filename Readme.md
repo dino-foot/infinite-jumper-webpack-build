@@ -1,5 +1,10 @@
--- npm install / yarn install
+- Author : Shohanur Rahaman 
+- Phaser Version: 3.55.X
+- Copyright reserved &copy;
 
--- npm run build / yarn build
 
--- npm run start / yarn start
+> npm install / yarn install
+
+> npm run build / yarn build
+
+> npm run start / yarn start
