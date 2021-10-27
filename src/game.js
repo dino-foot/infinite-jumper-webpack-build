@@ -1,9 +1,9 @@
-import platformUrl from "./public/sprites/ground_grass.png";
-import playerStandUrl from "./public/sprites/player/bunny1_stand.png";
-import playerJumpUrl from "./public/sprites/player/bunny1_jump.png";
-import leftArrowUrl from "./public/sprites/red_sliderLeft.png";
-import rightArrowUrl from "./public/sprites/red_sliderRight.png";
-import carrotUrl from "./public/sprites/carrot.png";
+import platformUrl from "../public/sprites/ground_grass.png";
+import playerStandUrl from "../public/sprites/player/bunny1_stand.png";
+import playerJumpUrl from "../public/sprites/player/bunny1_jump.png";
+import leftArrowUrl from "../public/sprites/red_sliderLeft.png";
+import rightArrowUrl from "../public/sprites/red_sliderRight.png";
+import carrotUrl from "../public/sprites/carrot.png";
 import Carrot from "./Carrot";
 
 export default class Game extends Phaser.Scene {
@@ -53,9 +53,23 @@ export default class Game extends Phaser.Scene {
     for (let i = 0; i < 5; i++) {
       let _x = Phaser.Math.Between(80, 400);
       let _y = 150 * i;
-
+      //sumon---->start
+      //re-position of the platform
+      console.log("_x: "+_x + "_y: "+ _y);
       /**@type {Phaser.Physics.Arcade.Sprite} */
-      let _platform = this.platforms.create(_x, _y, "platform");
+      let _platform;
+      if(i<3){
+        _platform = this.platforms.create(_x, _y, "platform");
+      }else if(i == 3){
+        let arr = [1,3.4];
+        let randomX = Phaser.Math.RND.pick(arr);
+        console.log("randomX: " + randomX);
+        _platform = this.platforms.create(110*randomX, _y, "platform");
+      }else if(i == 4){
+        _platform = this.platforms.create(240, _y, "platform");
+      }
+      //sumon--->end
+      
       _platform.scale = 0.5;
       let _body = _platform.body;
       _body.updateFromGameObject(); // refresh
