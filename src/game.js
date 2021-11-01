@@ -5,6 +5,9 @@ import leftArrowUrl from "../public/sprites/red_sliderLeft.png";
 import rightArrowUrl from "../public/sprites/red_sliderRight.png";
 import carrotUrl from "../public/sprites/carrot.png";
 import Carrot from "./Carrot";
+import jumpAudio from "../public/audio/jump.mp3";
+import gulpAudio from "../public/audio/gulp.mp3";
+import deadAudio from "../public/audio/dead.mp3";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -36,10 +39,19 @@ export default class Game extends Phaser.Scene {
     this.load.image("bunny-stand", playerStandUrl);
     this.load.image("bunny-jump", playerJumpUrl);
     this.load.image("carrot", carrotUrl);
+
+    this.load.audio("jump", jumpAudio);
+    this.load.audio("dead", deadAudio);
+    this.load.audio("gulp", gulpAudio);
   }
 
   create() {
     console.log("create");
+
+    //resume audio context for some reason audio does not play
+    // if (this.sound.context.state === "suspended") {
+    //   this.sound.context.resume();
+    // }
 
     //movement for mobile
     if (!this.sys.game.device.os.desktop) {
@@ -55,21 +67,21 @@ export default class Game extends Phaser.Scene {
       let _y = 150 * i;
       //sumon---->start
       //re-position of the platform
-      console.log("_x: "+_x + "_y: "+ _y);
+      console.log("_x: " + _x + "_y: " + _y);
       /**@type {Phaser.Physics.Arcade.Sprite} */
       let _platform;
-      if(i<3){
+      if (i < 3) {
         _platform = this.platforms.create(_x, _y, "platform");
-      }else if(i == 3){
-        let arr = [1,3.4];
+      } else if (i == 3) {
+        let arr = [1, 3.4];
         let randomX = Phaser.Math.RND.pick(arr);
         console.log("randomX: " + randomX);
-        _platform = this.platforms.create(110*randomX, _y, "platform");
-      }else if(i == 4){
+        _platform = this.platforms.create(110 * randomX, _y, "platform");
+      } else if (i == 4) {
         _platform = this.platforms.create(240, _y, "platform");
       }
       //sumon--->end
-      
+
       _platform.scale = 0.5;
       let _body = _platform.body;
       _body.updateFromGameObject(); // refresh
@@ -162,6 +174,7 @@ export default class Game extends Phaser.Scene {
   update(t, dt) {
     let _touchingDown = this.player.body.touching.down;
     if (_touchingDown) {
+      this.sound.play("jump");
       //this.player.setTexture("bunny-stand");
       this.player.setVelocityY(-500);
     } else {
@@ -198,6 +211,7 @@ export default class Game extends Phaser.Scene {
 
     const bottomPlatform = this.findBottomMostPlatform();
     if (this.player.y > bottomPlatform.y + 200) {
+      this.sound.play("dead");
       console.log("game over");
       this.scene.start("gameover");
     }
@@ -237,6 +251,7 @@ export default class Game extends Phaser.Scene {
 
   onOverlapCarrot(_player, _carrot) {
     console.log("overlap carrot");
+    this.sound.play("gulp");
     //hide and kill
     this.carrots.killAndHide(_carrot);
     //disable from physics simulation

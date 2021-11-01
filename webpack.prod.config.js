@@ -29,6 +29,10 @@ module.exports = {
         type: "asset/resource",
       },
       {
+        test: /\.(mp3|ogg|wav)$/i,
+        loader: "file-loader",
+      },
+      {
         test: [/\.vert$/, /\.frag$/],
         use: "raw-loader",
       },

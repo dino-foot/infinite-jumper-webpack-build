@@ -5,9 +5,6 @@ import GameOver from "./GameOver";
 const config = {
   type: Phaser.AUTO,
   backgroundColor: "87ceeb",
-  audio: {
-    disableWebAudio: true,
-  },
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
